@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 
 def home(request):
-    return HttpResponse('<h1>HOME 1</h1>')
+    return render(request, "home.html")
 
 
 def sobre(request):
