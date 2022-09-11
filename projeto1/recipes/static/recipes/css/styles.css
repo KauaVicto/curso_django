@@ -171,11 +171,11 @@ h6 {
     max-width: 100%;
 }
 
-.recipe-list-item {
+.main-content-list .recipe-list-item {
     max-width: 64rem;
 }
 
-.recipe-list-item:hover {
+.main-content-list .recipe-list-item:hover {
     box-shadow: -7px 7px 17px rgba(0, 0, 0, .4);
     transform: scale(1.01);
 }
@@ -227,6 +227,28 @@ h6 {
     font-size: 1.6rem;
 }
 
+.recipe-footer a {
+    background: var(--color-primary-dark);
+    display: block;
+    color: var(--color-white);
+    text-decoration: none;
+    text-align: center;
+    padding: 1.5rem var(--spacing-gutter-medium);
+    transition: all 300ms ease-in-out;
+}
+
+.recipe-footer a:hover {
+    filter: brightness(2);
+}
+
+/* RECEITA DETALHADA */
+.main-content-detail .recipe-list-item {
+    max-width: 84rem;
+    margin: 0 auto;
+}
+
+
+/* FOOTER DA PÁGINA */
 .main-footer {
     display: flex;
     align-items: center;
