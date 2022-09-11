@@ -173,6 +173,7 @@ h6 {
 
 .main-content-list .recipe-list-item {
     max-width: 64rem;
+    height: fit-content;
 }
 
 .main-content-list .recipe-list-item:hover {
@@ -193,12 +194,14 @@ h6 {
     color: var(--color-gray-4);
     margin: 0 1rem;
     user-select: none;
+    white-space: nowrap;
 }
 
 .recipe-author a {
     color: var(--color-gray-7);
     text-decoration: none;
     transition: all .3s ease-in-out;
+    white-space: nowrap;
 }
 
 .recipe-author a:hover {
@@ -227,6 +230,12 @@ h6 {
     font-size: 1.6rem;
 }
 
+/* Modo de preparo */
+.preparation-steps {
+    padding: var(--spacing-gutter-medium);
+}
+
+/* Botão das receitas */
 .recipe-footer a {
     background: var(--color-primary-dark);
     display: block;
