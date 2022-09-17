@@ -186,6 +186,11 @@ h6 {
     padding-bottom: 2rem;
 }
 
+.recipe-title a {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+}
+
 .recipe-author {
     padding: 0 var(--spacing-gutter-medium);
 }
