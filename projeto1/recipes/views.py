@@ -18,9 +18,9 @@ def recipe(request, id):
         id=id
     ).first()
 
-    if recipe is None:
-        raise Http404('Receita não encontrada')
-        return
+    # if recipe is None:
+    #     raise Http404('Receita não encontrada')
+    #     return
 
     return render(request, "recipes/pages/recipe-view.html", context={
         'recipe': recipe,
