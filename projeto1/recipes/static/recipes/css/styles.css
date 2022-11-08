@@ -281,3 +281,13 @@ h6 {
 .main-footer a:hover {
     filter: brightness(.8);
 }
+
+/* Preparation steps */
+.preparation-steps > * {
+    margin: 2rem 0;
+}
+
+/* Generics */
+.center {
+    text-align: center;
+}

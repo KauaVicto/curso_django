@@ -15,12 +15,13 @@ def home(request):
 
 def recipe(request, id):
     recipe = Recipe.objects.filter(
-        id=id
+        id=id,
+        is_published=True
     ).first()
 
-    # if recipe is None:
-    #     raise Http404('Receita não encontrada')
-    #     return
+    if recipe is None:
+        raise Http404('Receita não encontrada')
+        return
 
     return render(request, "recipes/pages/recipe-view.html", context={
         'recipe': recipe,
