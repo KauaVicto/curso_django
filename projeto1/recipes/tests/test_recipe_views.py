@@ -36,6 +36,15 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn('title', content)
         self.assertEquals(len(response_context_recipes), 1)
 
+    def test_recipe_home_template_dont_load_recipes_not_published(self):
+        """Test recipe is_published False dont show"""
+        self.make_recipe(is_published=False)
+
+        response = self.client.get(reverse('recipes:home'))
+
+        # Checa se possui 1 recipe
+        self.assertIn('Não possui receitas', response.content.decode('utf-8'))
+
     def test_recipe_category_view_function_is_correct(self):
         view = resolve(reverse('recipes:category', kwargs={'category_id': 1}))
         self.assertIs(view.func, views.category)
@@ -49,14 +58,28 @@ class RecipeViewsTest(RecipeTestBase):
     def test_recipe_category_template_loads_recipes(self):
         needed_title = 'This is a category test'
 
-        self.make_recipe(title=needed_title)
+        recipe = self.make_recipe(title=needed_title)
         response = self.client.get(
-            reverse('recipes:category', kwargs={'category_id': 1})
+            reverse('recipes:category', kwargs={
+                    'category_id': recipe.category.id})
         )
         content = response.content.decode('utf-8')
 
         # Checa se possui 1 recipe
         self.assertIn(needed_title, content)
+
+    def test_recipe_category_template_dont_load_recipes_not_published(self):
+        """Test recipe is_published False dont show"""
+        recipe = self.make_recipe(is_published=False)
+
+        response = self.client.get(
+            reverse('recipes:category', kwargs={
+                'category_id': recipe.category.id
+            }))
+
+        # Checa se possui 1 recipe
+        self.assertIn("não possui receitas nesta categoria",
+                      response.content.decode('utf-8'))
 
     def test_recipe_details_view_function_is_correct(self):
         view = resolve(reverse('recipes:recipe', kwargs={'id': 1}))
@@ -71,11 +94,21 @@ class RecipeViewsTest(RecipeTestBase):
     def test_recipe_detail_template_loads_the_correct_recipe(self):
         needed_title = 'This is a detail page - It load one recipe'
 
-        self.make_recipe(title=needed_title)
+        recipe = self.make_recipe(title=needed_title)
         response = self.client.get(
-            reverse('recipes:recipe', kwargs={'id': 1})
+            reverse('recipes:recipe', kwargs={'id': recipe.id})
         )
         content = response.content.decode('utf-8')
 
         # Checa se possui 1 recipe
         self.assertIn(needed_title, content)
+
+    def test_recipe_detail_template_dont_load_recipes_not_published(self):
+        """Test recipe is_published False dont show"""
+        recipe = self.make_recipe(is_published=False)
+
+        response = self.client.get(
+            reverse('recipes:recipe', kwargs={'id': recipe.id}))
+
+        # Checa se possui 1 recipe
+        self.assertEqual(response.status_code, 404)
