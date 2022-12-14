@@ -23,7 +23,7 @@ class RecipeModelsTest(RecipeTestBase):
         ]
 
         for field, max_length in fields:
-            setattr(self.recipe, field, 'A' * (max_length + 0))
+            setattr(self.recipe, field, 'A' * (max_length + 1))
 
             with self.assertRaises(ValidationError):
                 self.recipe.full_clean()

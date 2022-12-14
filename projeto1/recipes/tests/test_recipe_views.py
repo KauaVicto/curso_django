@@ -34,7 +34,7 @@ class RecipeViewsTest(RecipeTestBase):
 
         # Checa se possui 1 recipe
         self.assertIn('title', content)
-        self.assertEquals(len(response_context_recipes), 1)
+        self.assertEqual(len(response_context_recipes), 1)
 
     def test_recipe_home_template_dont_load_recipes_not_published(self):
         """Test recipe is_published False dont show"""
