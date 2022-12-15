@@ -4,7 +4,7 @@ from parameterized import parameterized
 from .test_recipe_base import Recipe, RecipeTestBase
 
 
-class RecipeModelsTest(RecipeTestBase):
+class RecipeModelTest(RecipeTestBase):
     def setUp(self) -> None:
         self.recipe = self.make_recipe()
         return super().setUp()
