@@ -1,7 +1,7 @@
 <div class="search-container">
     <div class="container">
-        <form action="" method="get" class="search-form">
-            <input type="text" class="search-input" placeholder="Busque uma receita" name="search">
+        <form action="{% url 'recipes:search' %}" method="GET" class="search-form">
+            <input type="text" class="search-input" required placeholder="Busque uma receita" name="search" value="{{ search }}">
             <button type="submit" class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
     </div>

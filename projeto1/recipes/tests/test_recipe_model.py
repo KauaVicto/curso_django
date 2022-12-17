@@ -30,7 +30,7 @@ class RecipeModelTest(RecipeTestBase):
         recipe = Recipe(
             title='recipe title',
             description='description',
-            slug='slug',
+            slug=f'slug{field}',
             preparation_time=2,
             preparation_time_unit='Minutos',
             servings=3,

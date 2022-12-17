@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from recipes.models import Category, Recipe
 
@@ -41,4 +41,22 @@ def category(request, category_id):
     return render(request, "recipes/pages/category.html", context={
         'recipes': recipes,
         'title': f'{category.name} | Category'
+    })
+
+
+def search(request):
+    search = request.GET.get('search', '').strip()
+
+    # caso o usuário não insira nada na busca
+    if len(search) == 0:
+        return redirect('/')
+
+    recipes = Recipe.objects.filter(
+        title__contains=search
+    )
+
+    return render(request, 'recipes/pages/search.html', context={
+        'search': search,
+        'page_title': f'Pesquisa por {search}',
+        'recipes': recipes,
     })
