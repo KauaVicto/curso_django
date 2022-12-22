@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -51,12 +52,17 @@ def search(request):
     if len(search) == 0:
         return redirect('/')
 
+    # realiza a busca no banco de dados
     recipes = Recipe.objects.filter(
-        title__contains=search
-    )
+        Q(
+            Q(title__icontains=search) |
+            Q(description__icontains=search)
+        ),
+        is_published=True
+    ).order_by('-id')
 
     return render(request, 'recipes/pages/search.html', context={
         'search': search,
-        'page_title': f'Pesquisa por {search}',
+        'page_title': f'Pesquisa por "{search}"',
         'recipes': recipes,
     })
