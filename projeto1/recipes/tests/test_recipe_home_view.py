@@ -44,3 +44,13 @@ class RecipeHomeViewTest(RecipeTestBase):
 
         # Checa se possui 1 recipe
         self.assertIn('Não possui receitas', response.content.decode('utf-8'))
+
+    def test_recipe_home_pagination_qty_9_recipes_per_page(self):
+        for i in range(1, 20):
+            self.make_recipe(
+                slug=f'slug-{i}',
+                author_data={'username': f'usuario{i}'}
+            )
+
+        response = self.client.get(reverse('recipes:home') + '?page=2')
+        self.assertEqual(len(response.context['recipes']), 9)

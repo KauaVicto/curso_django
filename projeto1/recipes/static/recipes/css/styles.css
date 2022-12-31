@@ -291,3 +291,30 @@ h6 {
 .center {
     text-align: center;
 }
+
+/* Pagination */
+.pagination-content {
+    width: 25%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: row wrap;
+    gap: 1rem 0.5rem;
+    justify-content: space-around;
+}
+
+.pagination-content .page-item{
+    color: var(--color-gray-8);
+    text-decoration: none;
+    padding: .5rem 1rem;
+    transition: .3s all ease-in-out;
+}
+
+.pagination-content .page-item:not(.page-link){
+    cursor: default;
+}
+
+.pagination-content .page-link.current_page, .pagination-content .page-link:hover{
+    background-color: var(--color-gray-8);
+    border-radius: 3px;
+    color: white;
+}
