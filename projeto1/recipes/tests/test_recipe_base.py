@@ -39,13 +39,19 @@ class RecipeTestBase(TestCase):
         preparation_steps_is_html=False,
         is_published=True,
         category_data=None,
-        author_data=None
+        author_data=None,
+        make_category=True
     ):
         if category_data is None:
             category_data = {}
 
         if author_data is None:
             author_data = {}
+
+        if make_category:
+            category = self.make_category(**category_data)
+        else:
+            category = category_data
 
         return Recipe.objects.create(
             title=title,
@@ -58,6 +64,6 @@ class RecipeTestBase(TestCase):
             preparation_steps=preparation_steps,
             preparation_steps_is_html=preparation_steps_is_html,
             is_published=is_published,
-            category=self.make_category(**category_data),
+            category=category,
             author=self.make_author(**author_data)
         )

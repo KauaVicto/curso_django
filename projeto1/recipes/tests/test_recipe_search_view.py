@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.urls import resolve, reverse
 
 from recipes import views
@@ -89,3 +91,21 @@ class RecipeSearchViewTest(RecipeTestBase):
         # Response both
         self.assertIn(recipe1, response_both.context['recipes'])
         self.assertIn(recipe2, response_both.context['recipes'])
+
+    @patch('recipes.views.PER_PAGE', new=10)
+    def test_recipe_search_is_paginated(self):
+        for i in range(19):
+            self.make_recipe(
+                title='receita',
+                slug=f'slug-{i}',
+                author_data={'username': f'usuario{i}'}
+            )
+
+        response = self.client.get(
+            reverse('recipes:search') + '?search=receita')
+        recipes = response.context['recipes']
+        paginator = recipes.paginator
+
+        self.assertEqual(paginator.num_pages, 2)
+        self.assertEqual(len(paginator.get_page(1)), 10)
+        self.assertEqual(len(paginator.get_page(2)), 9)

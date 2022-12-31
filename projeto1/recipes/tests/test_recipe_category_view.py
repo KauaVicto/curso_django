@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.urls import resolve, reverse
 
 from recipes import views
@@ -42,3 +44,23 @@ class RecipeCategoryViewTest(RecipeTestBase):
         # Checa se possui 1 recipe
         self.assertIn("não possui receitas nesta categoria",
                       response.content.decode('utf-8'))
+
+    @patch('recipes.views.PER_PAGE', new=10)
+    def test_recipe_category_is_paginated(self):
+        category = self.make_category(name='categoria teste')
+        for i in range(19):
+            self.make_recipe(
+                slug=f'slug-{i}',
+                author_data={'username': f'usuario{i}'},
+                category_data=category,
+                make_category=False
+            )
+
+        response = self.client.get(
+            reverse('recipes:category', kwargs={'category_id': category.id}))
+        recipes = response.context['recipes']
+        paginator = recipes.paginator
+
+        self.assertEqual(paginator.num_pages, 2)
+        self.assertEqual(len(paginator.get_page(1)), 10)
+        self.assertEqual(len(paginator.get_page(2)), 9)
